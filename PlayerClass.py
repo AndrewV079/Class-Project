@@ -42,7 +42,7 @@ class Player(pyglet.sprite.Sprite):
 
     def end_attack(self, dt):
         self.is_attacking = False
-        self.image = pyglet.resource.image()
+        self.image = pyglet.resource.image(image_here)
         self.scale = 1
 
     def update(self, dt):
@@ -56,4 +56,5 @@ class Player(pyglet.sprite.Sprite):
             self.y -= 10
         if self.cooldown > 0:
             self.cooldown -= 1
+
 
