@@ -7,7 +7,7 @@ def center_image(image):
     image.anchor_x = image.width // 2
     image.anchor_y = image.height // 2
 
-enemy_image = pyglet.resource.image('Basic_human_drawing.png')
+enemy_image = pyglet.resource.image()
 center_image(enemy_image)
 
 
@@ -20,4 +20,5 @@ def spawn_Enemy(amount):
                                         , enemy_x, enemy_y)
         enemies.append(new_Enemy)
     return enemies
+
 
