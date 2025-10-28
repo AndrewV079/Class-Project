@@ -15,8 +15,8 @@ if __name__ == '__main__':
 
 
     window = pyglet.window.Window(3000, 1400)
-    character = pyglet.resource.image('images (1).jpg')
-    attack_image = pyglet.resource.image('furina_image.png')
+    character = pyglet.resource.image(image_here)
+    attack_image = pyglet.resource.image(image_here)
     center_image(character)
     center_image(attack_image)
     playerObject = PlayerClass.Player(character, x= 1500, y=1000)
@@ -70,3 +70,4 @@ if __name__ == '__main__':
     pyglet.clock.schedule_interval(update, 1/60)
     pyglet.clock.schedule_interval(enemy_spawn_timer, 1)
     pyglet.app.run()
+
