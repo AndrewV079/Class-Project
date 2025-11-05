@@ -1,6 +1,3 @@
 Requires pyglet to function.
 CSE120 Project is dependant on all other files.
 Image files are replaceable at will.
-10/28/25 image files were removed and replace with image_here placeholders.
-11/5/25 stickEnemy changed to connsidered play position when spawning enemies, PlayerClass restrucured to track passive and attacking states,
-attacking enemy added, player damage detection WIP
