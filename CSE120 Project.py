@@ -14,26 +14,24 @@ if __name__ == '__main__':
 
 
 
-    window = pyglet.window.Window(3000, 1400)
-    character = pyglet.resource.image(image_here)
-    attack_image = pyglet.resource.image(image_here)
+    window = pyglet.window.Window(2000, 1400)
+    character = pyglet.resource.image('images (1).jpg')
+    attack_image = pyglet.resource.image('furina_image.png')
     center_image(character)
     center_image(attack_image)
     playerObject = PlayerClass.Player(character, x= 1500, y=1000)
 
 
     keys = key.KeyStateHandler()
-    hitBox = pyglet.shapes.Rectangle(playerObject.x-50, playerObject.y-50, 100, 100)
-    player_Stats = {'health' : 100, 'alive' : True, 'attacking' : False}
+
 
 
     @window.event
     def on_draw():
         window.clear()
         if game_Active:
-            if player_Stats['alive']:
+            if playerObject.state['alive']:
                 playerObject.draw()
-                hitBox.draw()
             for enemy in enemies:
                 enemy.draw()
 
@@ -54,15 +52,24 @@ if __name__ == '__main__':
 
     def update(dt):
         if game_Active:
-            hitBox.x = playerObject.x - 50
-            hitBox.y = playerObject.y - 50
-            if player_Stats['health'] <= 0:
-                player_Stats['alive'] = False
+            if not playerObject.state['hit']:
+                for enemy in enemies:
+                    if (enemy.x <= playerObject.x + 500 and enemy.x >= playerObject.x - 500) and (
+                            enemy.y <= playerObject.y + 500 and enemy.y >= playerObject.y - 500):
+                        playerObject.stats['health'] -= 10.
+                        playerObject.state['hit'] = True
+            if playerObject.stats['health'] <= 0:
+                playerObject.state['alive'] = False
+            if playerObject.state['attacking']:
+                for enemy in enemies:
+                    if (enemy.x <= playerObject.x + 500 and enemy.x >= playerObject.x - 500) and (enemy.y <= playerObject.y + 500 and enemy.y >= playerObject.y - 500):
+                        enemies.remove(enemy)
 
 
     def enemy_spawn_timer(dt):
         if game_Active:
-            stickEnemy.spawn_Enemy(1)
+            stickEnemy.spawn_Enemy(1,playerObject.x, playerObject.y)
+
 
 
 
@@ -70,4 +77,3 @@ if __name__ == '__main__':
     pyglet.clock.schedule_interval(update, 1/60)
     pyglet.clock.schedule_interval(enemy_spawn_timer, 1)
     pyglet.app.run()
-

@@ -6,7 +6,8 @@ class Player(pyglet.sprite.Sprite):
         super().__init__( *args, **kwargs)
         self.keys = key.KeyStateHandler()
         self.direction = {'left': False, 'right': False, 'up': False , 'down': False}
-        self.is_attacking = False
+        self.stats = {'health' : 100}
+        self.state = {'alive' : True,  'attacking' : False, 'hit' : False}
         self.cooldown = 0
 
 
@@ -32,17 +33,17 @@ class Player(pyglet.sprite.Sprite):
             self.direction['down'] = False
 
     def start_attack(self, attack_image):
-        if not self.is_attacking and self.cooldown == 0:
+        if not self.state['attacking'] and self.cooldown == 0:
+            self.state['attacking'] = True
             attack_image.scale = .25
-            self.is_attacking = True
             self.cooldown = 300
             self.image = attack_image
             self.scale = .25
             pyglet.clock.schedule_once(self.end_attack, 1)
 
     def end_attack(self, dt):
-        self.is_attacking = False
-        self.image = pyglet.resource.image(image_here)
+        self.state['attacking'] = False
+        self.image = pyglet.resource.image('images (1).jpg')
         self.scale = 1
 
     def update(self, dt):
@@ -56,5 +57,3 @@ class Player(pyglet.sprite.Sprite):
             self.y -= 10
         if self.cooldown > 0:
             self.cooldown -= 1
-
-
